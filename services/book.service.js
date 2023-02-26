@@ -5,9 +5,15 @@
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
+import booksJSON from '../assets/books.json' assert {type: 'json'}
+
+
 const BOOK_KEY = 'bookDB'
 
-_createBooks()
+let gBooks = booksJSON
+utilService.saveToStorage(BOOK_KEY, gBooks)
+
+// _createBooks()
 
 export const bookService = {
     query,
@@ -22,10 +28,10 @@ function query(filterBy = {}) {
         .then(books => {
             if (filterBy.txt) {
                 const regex = new RegExp(filterBy.txt, 'i')
-                books = books.filter(book => regex.test(book.vendor))
+                books = gBooks.filter(book => regex.test(book.title))
             }
-            if (filterBy.minSpeed) {
-                books = books.filter(book => book.maxSpeed >= filterBy.minSpeed)
+            if (filterBy.price) {
+                books = gBooks.filter(book => book.price >= filterBy.price)
             }
             return books
         })
@@ -47,24 +53,24 @@ function save(book) {
     }
 }
 
-function getEmptyBook(vendor = '', maxSpeed = 0) {
-    return { id: '', vendor, maxSpeed }
+function getEmptyBook(title = '', listPrice = {}) {
+    return { id: '', title, listPrice }
 }
 
-function _createBooks() {
-    let books = utilService.loadFromStorage(BOOK_KEY)
-    if (!books || !books.length) {
-        books = []
-        books.push(_createBook('audu', 300))
-        books.push(_createBook('fiak', 120))
-        books.push(_createBook('subali', 100))
-        books.push(_createBook('mitsu', 150))
-        utilService.saveToStorage(BOOK_KEY, books)
-    }
-}
+// function _createBooks() {
+//     let books = utilService.loadFromStorage(BOOK_KEY)
+//     if (!books || !books.length) {
+//         books = []
+//         books.push(_createBook('audu', 300))
+//         books.push(_createBook('fiak', 120))
+//         books.push(_createBook('subali', 100))
+//         books.push(_createBook('mitsu', 150))
+//         utilService.saveToStorage(BOOK_KEY, books)
+//     }
+// }
 
-function _createBook(vendor, maxSpeed = 250) {
-    const book = getEmptyBook(vendor, maxSpeed)
-    book.id = utilService.makeId()
-    return book
-}
+// function _createBook(vendor, maxSpeed = 250) {
+//     const book = getEmptyBook(vendor, maxSpeed)
+//     book.id = utilService.makeId()
+//     return book
+// }

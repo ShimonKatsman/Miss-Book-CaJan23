@@ -6,7 +6,7 @@ import BookList from './BookList.js'
 import BookDetails from './BookDetails.js'
 import BookEdit from './BookEdit.js'
 
-import booksJSON from '../assets/books.json' assert {type: 'json'}
+// import booksJSON from '../assets/books.json' assert {type: 'json'}
 
 export default {
     template: `
@@ -26,7 +26,7 @@ export default {
     `,
     data() {
         return {
-            books: booksJSON,
+            books: null,
             selectedBook: null,
             filterBy: {},
         }
@@ -51,13 +51,13 @@ export default {
     },
     computed: {
         filteredBooks() {
-            const regex = new RegExp(this.filterBy.vendor, 'i')
-            return this.books.filter(book => regex.test(book.vendor))
+            const regex = new RegExp(this.filterBy.title, 'i')
+            return this.books.filter(book => regex.test(book.title))
         }
     },
     created() {
-        // bookService.query()
-        //     .then(books => this.books = books)
+        bookService.query()
+            .then(books => this.books = books)
     },
     components: {
         BookFilter,

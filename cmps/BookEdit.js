@@ -8,9 +8,9 @@ export default {
             <h2>Add a book</h2>
             <form @submit.prevent="save">
                 <label>Title: </label>
-                <input type="text" v-model="book.vendor" placeholder="Book">
+                <input type="text" v-model="book.title" placeholder="Book">
                 <label>Price: </label>
-                <input type="number" v-model.number="book.maxSpeed">
+                <input type="number" v-model.number="book.listPrice.amount">
                 <button>Save</button>
             </form>
         </section>

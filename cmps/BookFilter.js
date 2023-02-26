@@ -4,7 +4,7 @@ export default {
     template: `
         <section class="book-filter">
             <input 
-                v-model="filterBy.vendor"
+                v-model="filterBy.title"
                 @input="filter" 
                 placeholder="Search"
                 type="text" />
@@ -12,7 +12,7 @@ export default {
     `,
     data() {
         return {
-            filterBy: { vendor: '', maxSpeed: 0 },
+            filterBy: { title: '', price: 0 },
         }
     },
     methods: {
