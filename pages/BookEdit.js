@@ -5,7 +5,7 @@ import { bookService } from "../services/book.service.js"
 export default {
     template: `
         <section class="book-edit">
-            <h2>Add a book</h2>
+            <h2>{{(book.id)? 'Edit' : 'Add'}} a book</h2>
             <form @submit.prevent="save">
                 <label>Title: </label>
                 <input type="text" v-model="book.title" placeholder="Book">
@@ -18,6 +18,13 @@ export default {
     data() {
         return {
             book: bookService.getEmptyBook()
+        }
+    },
+    created() {
+        const { bookId } = this.$route.params
+        if (bookId) {
+            bookService.get(bookId)
+                .then(book => this.book = book)
         }
     },
     methods: {

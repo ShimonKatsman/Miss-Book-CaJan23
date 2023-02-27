@@ -1,26 +1,42 @@
 // בס"ד
 
-import LongTxt from './LongTxt.js'
+import { bookService } from '../services/book.service.js'
+
+import LongTxt from '../cmps/LongTxt.js'
 
 export default {
-    props: ['book'],
+    // props: ['book'],
     template: `
         <section class="book-details">
             <h2>{{ book.title }}</h2>
-            <h3>Price: §{{ book.listPrice.amount }}</h3>
+            <h3 :style="{color: setColor}">Price: §{{ book.listPrice.amount }}</h3>
             <p>{{ pageMsg }}</p>
             <p>{{ publishedStatus }}</p>
             <em>{{ saleMsg }}</em>
             <img :src="book.thumbnail">
             <LongTxt :length="10" :txt="book.description"/>
-            <button @click="closeDetails">Close</button>
+            <!-- <button @click="closeDetails">Close</button> -->
+
+            <RouterLink to="/book">Back to list</RouterLink>
         </section>
 
     `,
+    data() {
+        return {
+            color: '',
+            book: {},
+        }
+    },
+    created() {
+        // console.log('Params:',  this.$route.params)
+        const { bookId } = this.$route.params
+        bookService.get(bookId)
+            .then(book => this.book = book)
+    },
     methods: {
-        closeDetails() {
-            this.$emit('hide-details')
-        },
+        // closeDetails() {
+        //     this.$emit('hide-details')
+        // },
     },
     computed: {
         pageMsg() {
@@ -37,6 +53,10 @@ export default {
         },
         saleMsg() {
             return this.book.listPrice.isOnSale ? 'On Sale' : ''
+        },
+        setColor() {
+            if (this.book.listPrice.amount > 150) return 'red'
+            if (this.book.listPrice.amount < 20) return 'green'
         },
     },
     components: {

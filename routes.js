@@ -1,11 +1,10 @@
+// בס"ד
+
 import HomePage from './pages/HomePage.js'
 import AboutPage, {AboutTeam, AboutServices} from './pages/AboutPage.js'
-import CarIndex from './pages/CarIndex.js'
-import CarDetails from './pages/CarDetails.js'
-import CarEdit from './pages/CarEdit.js'
-
-
-
+import BookIndex from './pages/BookIndex.js'
+import BookDetails from './pages/BookDetails.js'
+import BookEdit from './pages/BookEdit.js'
 
 const { createRouter, createWebHashHistory } = VueRouter
 const options = {
@@ -30,16 +29,16 @@ const options = {
             ]
         },
         {
-            path: '/car',
-            component: CarIndex
+            path: '/book',
+            component: BookIndex
         },
         {
-            path: '/car/:carId',
-            component: CarDetails
+            path: '/book/:bookId',
+            component: BookDetails
         },
         {
-            path: '/car/edit/:carId?',
-            component: CarEdit
+            path: '/book/edit/:bookId?',
+            component: BookEdit
         },
         // Last fallback if no route was matched:
         {
@@ -48,5 +47,6 @@ const options = {
         }
     ]
 }
+
 export const router = createRouter(options)
 

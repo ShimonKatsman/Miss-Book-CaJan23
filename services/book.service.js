@@ -28,10 +28,10 @@ function query(filterBy = {}) {
         .then(books => {
             if (filterBy.txt) {
                 const regex = new RegExp(filterBy.txt, 'i')
-                books = gBooks.filter(book => regex.test(book.title))
+                books = books.filter(book => regex.test(book.title))
             }
             if (filterBy.price) {
-                books = gBooks.filter(book => book.price >= filterBy.price)
+                // books = gBooks.filter(book => book.price >= filterBy.price)
             }
             return books
         })

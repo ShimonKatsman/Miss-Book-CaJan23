@@ -1,5 +1,9 @@
 /* בס"ד */
 
+.basad {
+  text-align: right;
+}
+
 .main-layout {
   margin: 0 auto;
   padding-left: 1.6rem;
@@ -13,5 +17,5 @@
 }
 
 .router-view {
-    min-height: calc(90vh - 3rem);
+  min-height: calc(90vh - 3rem);
 }
