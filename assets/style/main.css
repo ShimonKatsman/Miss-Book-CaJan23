@@ -19,6 +19,6 @@
 @import 'cmps/AppFooter.css';
 @import 'cmps/BookFilter.css';
 @import 'cmps/BookList.css';
-
 @import 'cmps/BookDetails.css';
 @import 'cmps/BookEdit.css';
+@import 'cmps/UserMessage.css';

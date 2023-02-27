@@ -1,13 +1,10 @@
 // בס"ד
 
 import { bookService } from '../services/book.service.js'
+import { eventBusService } from '../services/event-bus.service.js'
 
 import BookFilter from '../cmps/BookFilter.js'
 import BookList from '../cmps/BookList.js'
-// import BookDetails from './BookDetails.js'
-// import BookEdit from './BookEdit.js'
-
-// import booksJSON from '../assets/books.json' assert {type: 'json'}
 
 export default {
     template: `
@@ -15,14 +12,9 @@ export default {
             <RouterLink to="/book/edit">Add a book</RouterLink> |
 
             <BookFilter @filter="setFilterBy"/>
-            <BookList 
-                :books="filteredBooks" 
+            
+            <BookList :books="filteredBooks" 
                 @remove="removeBook" />
-            <!-- <BookEdit @book-saved="onSaveBook"/> -->
-            <!-- <BookDetails 
-                v-if="selectedBook" 
-                @hide-details="selectedBook = null"
-                :book="selectedBook"/> -->
         </section>
     `,
     data() {
@@ -41,14 +33,12 @@ export default {
                 .then(() => {
                     const idx = this.books.findIndex(book => book.id === bookId)
                     this.books.splice(idx, 1)
+                    eventBusService.emit('show-msg', { txt: 'Book removed', type: 'success' })
+                })
+                .catch(err => {
+                    eventBusService.emit('show-msg', { txt: 'Book remove failed', type: 'error' })
                 })
         },
-        // showBookDetails(bookId) {
-        //     this.selectedBook = this.books.find(book => book.id === bookId)
-        // },
-        // onSaveBook(newBook) {
-        //     this.books.unshift(newBook)
-        // },
         setFilterBy(filterBy) {
             this.filterBy = filterBy
         }
@@ -62,7 +52,5 @@ export default {
     components: {
         BookFilter,
         BookList,
-        // BookDetails,
-        // BookEdit,
     }
 }

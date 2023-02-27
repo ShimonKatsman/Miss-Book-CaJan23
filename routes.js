@@ -1,7 +1,7 @@
 // בס"ד
 
 import HomePage from './pages/HomePage.js'
-import AboutPage, {AboutTeam, AboutServices} from './pages/AboutPage.js'
+import AboutPage, { AboutTeam, AboutServices } from './pages/AboutPage.js'
 import BookIndex from './pages/BookIndex.js'
 import BookDetails from './pages/BookDetails.js'
 import BookEdit from './pages/BookEdit.js'
@@ -43,7 +43,7 @@ const options = {
         // Last fallback if no route was matched:
         {
             path: '/:catchAll(.*)',
-            component: AboutPage
+            component: HomePage
         }
     ]
 }

@@ -7,10 +7,8 @@ import { router } from './routes.js'
 import AppHeader from './cmps/AppHeader.js'
 import AppFooter from './cmps/AppFooter.js'
 
-// import BookIndex from './cmps/BookIndex.js'
+import UserMessage from './cmps/UserMessage.js'
 
-// import HomePage from './pages/HomePage.js'
-// import AboutPage from './pages/AboutPage.js'
 
 const options = {
     template: `
@@ -34,6 +32,7 @@ const options = {
     components: {
         AppHeader,
         AppFooter,
+        UserMessage,
     }
 }
 const app = createApp(options)

@@ -17,6 +17,8 @@ export default {
             <LongTxt :length="10" :txt="book.description"/>
             <!-- <button @click="closeDetails">Close</button> -->
 
+            <AddReview />
+
             <RouterLink to="/book">Back to list</RouterLink>
         </section>
 
@@ -31,7 +33,8 @@ export default {
         // console.log('Params:',  this.$route.params)
         const { bookId } = this.$route.params
         bookService.get(bookId)
-            .then(book => this.book = book)
+        .then(book => this.book = book)
+        console.log('this.book',this.book)
     },
     methods: {
         // closeDetails() {
