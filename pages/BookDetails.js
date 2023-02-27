@@ -17,7 +17,7 @@ export default {
             <LongTxt :length="10" :txt="book.description"/>
             <!-- <button @click="closeDetails">Close</button> -->
 
-            <AddReview />
+            <AddReview /> 
 
             <RouterLink to="/book">Back to list</RouterLink>
         </section>
