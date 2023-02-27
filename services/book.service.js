@@ -10,10 +10,10 @@ import booksJSON from '../assets/books.json' assert {type: 'json'}
 
 const BOOK_KEY = 'bookDB'
 
-let gBooks = booksJSON
-utilService.saveToStorage(BOOK_KEY, gBooks)
+// let gBooks = booksJSON
+// utilService.saveToStorage(BOOK_KEY, gBooks)
 
-// _createBooks()
+_createBooks()
 
 export const bookService = {
     query,
@@ -57,17 +57,17 @@ function getEmptyBook(title = '', listPrice = {}) {
     return { id: '', title, listPrice }
 }
 
-// function _createBooks() {
-//     let books = utilService.loadFromStorage(BOOK_KEY)
-//     if (!books || !books.length) {
-//         books = []
-//         books.push(_createBook('audu', 300))
-//         books.push(_createBook('fiak', 120))
-//         books.push(_createBook('subali', 100))
-//         books.push(_createBook('mitsu', 150))
-//         utilService.saveToStorage(BOOK_KEY, books)
-//     }
-// }
+function _createBooks() {
+    let books = utilService.loadFromStorage(BOOK_KEY)
+    if (!books || !books.length) {
+        // books = []
+        // books.push(_createBook('audu', 300))
+        // books.push(_createBook('fiak', 120))
+        // books.push(_createBook('subali', 100))
+        // books.push(_createBook('mitsu', 150))
+        utilService.saveToStorage(BOOK_KEY, booksJSON)
+    }
+}
 
 // function _createBook(vendor, maxSpeed = 250) {
 //     const book = getEmptyBook(vendor, maxSpeed)

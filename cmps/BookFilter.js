@@ -11,19 +11,20 @@ export default {
 
             <fieldset>
                 <legend>Book on sale</legend>
-                <input @input="filter" type="radio" value="true" v-model="filterBy.picked"> true
-                <input type="radio" value="false" v-model="filterBy.picked"> false
+                <input type="radio" :value="true" v-model="filterBy.picked" @change="filter"> true
+                <input type="radio" :value="false" v-model="filterBy.picked" @change="filter"> false
             </fieldset>
 
         </section>
     `,
     data() {
         return {
-            filterBy: { title: '', price: 0, picked: '', },
+            filterBy: { title: '', price: 0, picked: true, },
         }
     },
     methods: {
         filter() {
+            console.log('this.filterBy',this.filterBy)
             this.$emit('filter', this.filterBy)
         }
     }

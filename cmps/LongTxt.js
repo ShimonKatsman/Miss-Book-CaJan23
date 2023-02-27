@@ -20,7 +20,7 @@ export default {
     computed: {
         toggleSummery() {
             let summery = this.txt
-
+            // console.log('in comp')
             if (this.btnTxt === 'more') {
                 return summery.split(' ').splice(0, +(this.length) - 1).join(' ')
             }
