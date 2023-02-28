@@ -3,6 +3,7 @@
 import { bookService } from '../services/book.service.js'
 
 import LongTxt from '../cmps/LongTxt.js'
+import AddReview from '../cmps/AddReview.js'
 
 export default {
     // props: ['book'],
@@ -17,7 +18,7 @@ export default {
             <LongTxt :length="10" :txt="book.description"/>
             <!-- <button @click="closeDetails">Close</button> -->
 
-            <AddReview /> 
+            <AddReview :book="book"/> 
 
             <RouterLink to="/book">Back to list</RouterLink>
         </section>
@@ -34,7 +35,7 @@ export default {
         const { bookId } = this.$route.params
         bookService.get(bookId)
         .then(book => this.book = book)
-        console.log('this.book',this.book)
+        // console.log('this.book',this.book)
     },
     methods: {
         // closeDetails() {
@@ -64,5 +65,6 @@ export default {
     },
     components: {
         LongTxt,
+        AddReview,
     }
 }

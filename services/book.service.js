@@ -9,6 +9,7 @@ import booksJSON from '../assets/books.json' assert {type: 'json'}
 
 
 const BOOK_KEY = 'bookDB'
+const REVIEW_KEY = 'reviewDB'
 
 // let gBooks = booksJSON
 // utilService.saveToStorage(BOOK_KEY, gBooks)
@@ -21,6 +22,7 @@ export const bookService = {
     remove,
     save,
     getEmptyBook,
+    addReview,
 }
 
 function query(filterBy = {}) {
@@ -74,3 +76,14 @@ function _createBooks() {
 //     book.id = utilService.makeId()
 //     return book
 // }
+
+function addReview(bookId, review) {
+    let rev = { id: bookId, review }
+
+    if (!utilService.loadFromStorage(REVIEW_KEY)) storageService.save(REVIEW_KEY, [rev])
+
+    let revs = utilService.loadFromStorage(REVIEW_KEY)
+    revs.push(rev)
+
+    storageService.save(REVIEW_KEY, revs)
+}
