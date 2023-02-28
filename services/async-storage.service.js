@@ -26,7 +26,7 @@ function get(entityType, entityId) {
 
 function post(entityType, newEntity) {
     newEntity = JSON.parse(JSON.stringify(newEntity)) 
-    newEntity.id = _makeId()
+    // newEntity.id = _makeId()
     return query(entityType).then(entities => {
         entities.push(newEntity)
         save(entityType, entities)
@@ -38,7 +38,7 @@ function put(entityType, updatedEntity) {
     updatedEntity = JSON.parse(JSON.stringify(updatedEntity))    
     return query(entityType).then(entities => {
         const idx = entities.findIndex(entity => entity.id === updatedEntity.id)
-        if (idx < 0) throw new Error(`Update failed, cannot find entity with id: ${entityId} in: ${entityType}`)
+        if (idx < 0) throw new Error(`Update failed, cannot find entity with id: ${updatedEntity.id} in: ${entityType}`)
         entities.splice(idx, 1, updatedEntity)
         save(entityType, entities)
         return updatedEntity

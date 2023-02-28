@@ -10,6 +10,7 @@ import booksJSON from '../assets/books.json' assert {type: 'json'}
 
 const BOOK_KEY = 'bookDB'
 const REVIEW_KEY = 'reviewDB'
+const GOOGLE_BOOK_API = 'https://www.googleapis.com/books/v1/volumes?q='
 
 // let gBooks = booksJSON
 // utilService.saveToStorage(BOOK_KEY, gBooks)
@@ -23,6 +24,8 @@ export const bookService = {
     save,
     getEmptyBook,
     addReview,
+    request,
+    addGoogleBook,
 }
 
 function query(filterBy = {}) {
@@ -41,7 +44,7 @@ function query(filterBy = {}) {
 
 function get(bookId) {
     return storageService.get(BOOK_KEY, bookId)
-                .then(_setNextPrevBookId)
+        .then(_setNextPrevBookId)
 }
 
 function remove(bookId) {
@@ -49,7 +52,12 @@ function remove(bookId) {
 }
 
 function save(book) {
-    if (book.id) {
+    let books = utilService.loadFromStorage(BOOK_KEY)
+
+    let foundBook = books.find(item => item.id === book.id)
+
+    if (foundBook) {
+    // if (book.id) {
         return storageService.put(BOOK_KEY, book)
     } else {
         return storageService.post(BOOK_KEY, book)
@@ -98,4 +106,34 @@ function _setNextPrevBookId(book) {
             : books[books.length - 1].id
         return book
     })
+}
+
+function request(term) {
+    return fetch(GOOGLE_BOOK_API + term)
+        .then(res => res.json())
+        .then(res => { return res })
+}
+
+function addGoogleBook(title, books) {
+
+    let book = books.items.find(item => item.volumeInfo.title === title)
+console.log('book',book)
+    let newBook = {
+        "id": book.id,
+        "title": book.volumeInfo.title,
+        "subtitle": book.volumeInfo.subtitle,
+        "authors": book.volumeInfo.authors,
+        "publishedDate": book.volumeInfo.publishedDate,
+        "description": book.volumeInfo.description,
+        "pageCount": book.pageCount,
+        "categories": book.categories,
+        "thumbnail": book.volumeInfo.imageLinks.thumbnail,
+        "language": book.language,
+        "listPrice": {
+            "amount": Math.random() * 200,
+            "currencyCode": "EUR",
+            "isOnSale": false
+        }
+    }
+    save(newBook)
 }
