@@ -8,7 +8,7 @@ import AddReview from '../cmps/AddReview.js'
 export default {
     // props: ['book'],
     template: `
-        <section class="book-details">
+        <section class="book-details" v-if="book">
             <h2>{{ book.title }}</h2>
             <h3 :style="{color: setColor}">Price: §{{ book.listPrice.amount }}</h3>
             <p>{{ pageMsg }}</p>
@@ -16,10 +16,14 @@ export default {
             <em>{{ saleMsg }}</em>
             <img :src="book.thumbnail">
             <LongTxt :length="10" :txt="book.description"/>
-            <!-- <button @click="closeDetails">Close</button> -->
 
             <AddReview :book="book"/> 
 
+            <div>
+               <RouterLink :to="'/book/' + book.prevBookId">Previous book</RouterLink> | 
+               <RouterLink :to="'/book/' + book.nextBookId">Next book</RouterLink>
+            </div>
+            
             <RouterLink to="/book">Back to list</RouterLink>
         </section>
 
@@ -27,22 +31,22 @@ export default {
     data() {
         return {
             color: '',
-            book: {},
+            book: null,
         }
     },
     created() {
-        // console.log('Params:',  this.$route.params)
-        const { bookId } = this.$route.params
-        bookService.get(bookId)
-        .then(book => this.book = book)
-        // console.log('this.book',this.book)
+        this.loadBook()
     },
     methods: {
-        // closeDetails() {
-        //     this.$emit('hide-details')
-        // },
+        loadBook() {
+            bookService.get(this.bookId)
+                .then(book => this.book = book)
+        },
     },
     computed: {
+        bookId() {
+            return this.$route.params.bookId
+        },
         pageMsg() {
             if (this.book.pageCount > 500) return 'Serious Reading'
             if (this.book.pageCount > 200) return 'Descent Reading'
@@ -62,6 +66,11 @@ export default {
             if (this.book.listPrice.amount > 150) return 'red'
             if (this.book.listPrice.amount < 20) return 'green'
         },
+    },
+    watch: {
+        bookId() {
+            this.loadBook()
+        }
     },
     components: {
         LongTxt,
