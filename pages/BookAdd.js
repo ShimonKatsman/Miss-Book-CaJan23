@@ -45,7 +45,10 @@ export default {
             // .catch(err => console.log('invalid term'))
         },
         onAdd(title) {
-            bookService.addGoogleBook(title, this.books)
+            bookService.addGoogleBook(title, this.books).then(res=>{
+                this.$router.push('/book')
+                // console.log('res',res)
+        })
         },
     },
     computed: {

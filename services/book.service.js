@@ -57,7 +57,7 @@ function save(book) {
     let foundBook = books.find(item => item.id === book.id)
 
     if (foundBook) {
-    // if (book.id) {
+        // if (book.id) {
         return storageService.put(BOOK_KEY, book)
     } else {
         return storageService.post(BOOK_KEY, book)
@@ -115,9 +115,11 @@ function request(term) {
 }
 
 function addGoogleBook(title, books) {
-
     let book = books.items.find(item => item.volumeInfo.title === title)
-console.log('book',book)
+
+    // let booksDB = utilService.loadFromStorage(BOOK_KEY)
+    // if (booksDB.find(item => item.title === title)) return
+    // console.log('book',book)
     let newBook = {
         "id": book.id,
         "title": book.volumeInfo.title,
@@ -135,5 +137,5 @@ console.log('book',book)
             "isOnSale": false
         }
     }
-    save(newBook)
+    return save(newBook)
 }

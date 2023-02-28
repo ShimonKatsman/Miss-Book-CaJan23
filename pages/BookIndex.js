@@ -25,7 +25,9 @@ export default {
     },
     created() {
         bookService.query()
-            .then(books => this.books = books)
+            .then(books =>{ this.books = books
+                // console.log('this.books',this.books)
+            })
     },
     methods: {
         removeBook(bookId) {
